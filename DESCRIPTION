@@ -1,0 +1,18 @@
+Package: LRpadding
+Type: Package
+Title: Padded Logistic Regression
+Version: 1.0
+Date: 2020-05-01
+Authors@R:
+    person("Christopher", "Gill", email = "chrgill@gmail.com", role = c("aut", "cre"))
+Description: Part of a larger project developed here for testing purposes, implements here a padded logistic regression.
+License: GPL-3
+Imports: 
+    Rcpp (>= 1.0.4),
+    RcppNumerical,
+    RcppEigen
+LinkingTo: Rcpp, RcppEigen, RcppNumerical
+RoxygenNote: 7.0.2
+Suggests: 
+    testthat (>= 2.1.0)
+Encoding: UTF-8
