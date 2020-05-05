@@ -10,6 +10,8 @@ using namespace Numer;
 
 typedef Eigen::Map<Eigen::MatrixXd> MapMat;
 typedef Eigen::Map<Eigen::VectorXd> MapVec;
+typedef Eigen::Map<Eigen::MatrixXd> RefMat;
+typedef Eigen::Map<Eigen::VectorXd> RefVec;
 
 class basicPaddedLogisticReg: public MFuncGrad
 {
@@ -70,15 +72,15 @@ Rcpp::NumericVector basic_padding_logistic_reg_(Rcpp::NumericMatrix x, Rcpp::Num
 class PaddedLogisticReg: public MFuncGrad
 {
 private:
-  const MapMat X;
-  const MapVec Y;
+  const RefMat X;
+  const RefVec Y;
   const int n; // length of response and number of rows of model matrix X
   Eigen::VectorXd xbeta; // linear predictors
   Eigen::VectorXd prob; // 
   const int padding;
   
 public:
-  PaddedLogisticReg(const MapMat x_, const MapVec y_,const int padding_) : //constructor
+  PaddedLogisticReg(const RefMat x_, const RefVec y_,const int padding_) : //constructor
   X(x_),
   Y(y_),
   n(X.rows()),

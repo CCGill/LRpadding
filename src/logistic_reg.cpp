@@ -13,10 +13,10 @@ typedef Eigen::Map<Eigen::VectorXd> MapVec;
 class basicLogisticReg: public MFuncGrad
 {
 private:
-  const MapMat X;
-  const MapVec Y;
+  const Eigen::MatrixXd X;
+  const Eigen::VectorXd Y;
 public:
-  basicLogisticReg(const MapMat x_, const MapVec y_) : X(x_), Y(y_) {}
+  basicLogisticReg(const Eigen::Ref<Eigen::MatrixXd> x_, const Eigen::Ref<Eigen::VectorXd> y_) : X(x_), Y(y_) {}
   
   double f_grad(Constvec& beta, Refvec grad)
   {
@@ -63,14 +63,14 @@ Rcpp::NumericVector basic_logistic_reg_(Rcpp::NumericMatrix x, Rcpp::NumericVect
 class LogisticReg: public MFuncGrad
 {
 private:
-  const MapMat X;
-  const MapVec Y;
+  const Eigen::Ref<Eigen::MatrixXd> X;
+  const Eigen::Ref<Eigen::VectorXd> Y;
   const int n; // length of response and number of rows of model matrix X
   Eigen::VectorXd xbeta; // linear predictors
   Eigen::VectorXd prob; // 
   
 public:
-  LogisticReg(const MapMat x_, const MapVec y_) : //constructor
+  LogisticReg(const Eigen::Ref<Eigen::MatrixXd> x_, const Eigen::Ref<Eigen::VectorXd> y_) : //constructor
     X(x_),
     Y(y_),
     n(X.rows()),
@@ -126,8 +126,9 @@ Rcpp::List logistic_reg_(Rcpp::NumericMatrix x, Rcpp::NumericVector y,
   // Negative log likelihood
   LogisticReg nll(xx, yy);
   // Initial guess
-  Rcpp::NumericVector b = Rcpp::clone(start);
-  MapVec beta(b.begin(), b.length());
+  Rcpp::NumericVector b = Rcpp::clone(start); 
+  // this line (above) protects the start vector, so it can be reused? 
+  MapVec beta(b.begin(), b.length()); 
   
   double fopt;
   int status = optim_lbfgs(nll, beta, fopt, maxit, eps_f, eps_g);
