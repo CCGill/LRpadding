@@ -39,11 +39,11 @@ algorithm for unconstrained minimization problems based on the LBFGS++ library.
 
 ## Example
 
-This is a basic example problem demonstrating that a logistic_reg implementation on padded response/model 
+This is an example demonstrating that a logistic_reg implementation on padded response/model 
 agrees with the implementation of the padding.  It is based on a unit test for this package.  Note 
-that the logistic_reg function is currently identical to the example version of fastLR from the RcppNumerical package.
+that the basic_logistic_reg function is currently identical to the example version of fastLR from the RcppNumerical package, returning only the coefficients, and logistic_reg is identical to the full fastLR function.
 
-We also show that our results closely matches the corresponding glm call.
+We also show that our result closely matches the corresponding glm call.
 
 ```{r example}
 library(LRpadding)
@@ -63,21 +63,30 @@ set.seed(42)
     padded_x <- rbind(x,t(matrix( rep.int(c(1,0), c(1,p)), p+1, testpadding)))
     padded_y <- c(y,rep(0,testpadding))
     
-    res1 <- logistic_reg(padded_x, padded_y) 
+    res1 <- logistic_reg(padded_x, padded_y)
     res2 <- padded_logistic_reg(x,y,padding = testpadding)
+    max(abs(res1$coefficients - res2$coefficients)) ## identical results
+
+    res1$loglikelihood
+    res2$loglikelihood
     
-    max(abs(res1 - res2)) ## identical results
+    res3 <- basic_logistic_reg(padded_x,padded_y)
+    res4 <- basic_padded_logistic_reg(x,y,padding = testpadding)
+    max(abs(res3 - res4)) ## identical results
 
-
+    max(abs(res1$coefficients - res3))
+    max(abs(res2$coefficients - res4))
+    
+    
 ```
 
 A second example, for time.
 
 ```{r example 2,warning = F,message = F}
     set.seed(42)
-    system.time(res1 <- logistic_reg(padded_x, padded_y) )
+    system.time(res1 <- logistic_reg(padded_x, padded_y)$coefficients )
  
-    system.time(res2 <- padded_logistic_reg(x,y,padding = testpadding))
+    system.time(res2 <- padded_logistic_reg(x,y,padding = testpadding)$coefficients)
 
     system.time(res3 <- glm.fit(padded_x,padded_y,family = binomial())$coefficients)
 

@@ -10,7 +10,8 @@ License: GPL-3
 Imports: 
     Rcpp (>= 1.0.4),
     RcppNumerical,
-    RcppEigen
+    RcppEigen,
+    qgam
 LinkingTo: Rcpp, RcppEigen, RcppNumerical
 RoxygenNote: 7.0.2
 Suggests: 

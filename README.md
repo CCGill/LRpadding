@@ -21,9 +21,9 @@ We make use of the excellent RcppNumerical package (<http://cran.r-project.org/p
 Example
 -------
 
-This is a basic example problem demonstrating that a logistic\_reg implementation on padded response/model agrees with the implementation of the padding. It is based on a unit test for this package. Note that the logistic\_reg function is currently identical to the example version of fastLR from the RcppNumerical package.
+This is an example demonstrating that a logistic\_reg implementation on padded response/model agrees with the implementation of the padding. It is based on a unit test for this package. Note that the basic\_logistic\_reg function is currently identical to the example version of fastLR from the RcppNumerical package, returning only the coefficients, and logistic\_reg is identical to the full fastLR function.
 
-We also show that our results closely matches the corresponding glm call.
+We also show that our result closely matches the corresponding glm call.
 
 ``` r
 library(LRpadding)
@@ -43,32 +43,46 @@ set.seed(42)
     padded_x <- rbind(x,t(matrix( rep.int(c(1,0), c(1,p)), p+1, testpadding)))
     padded_y <- c(y,rep(0,testpadding))
     
-    res1 <- logistic_reg(padded_x, padded_y) 
+    res1 <- logistic_reg(padded_x, padded_y)
     res2 <- padded_logistic_reg(x,y,padding = testpadding)
+    max(abs(res1$coefficients - res2$coefficients)) ## identical results
+#> [1] 3.166356e-13
+
+    res1$loglikelihood
+#> [1] -13321.19
+    res2$loglikelihood
+#> [1] -13321.19
     
-    max(abs(res1 - res2)) ## identical results
+    res3 <- basic_logistic_reg(padded_x,padded_y)
+    res4 <- basic_padded_logistic_reg(x,y,padding = testpadding)
+    max(abs(res3 - res4)) ## identical results
 #> [1] 2.273737e-12
+
+    max(abs(res1$coefficients - res3))
+#> [1] 0.0006703128
+    max(abs(res2$coefficients - res4))
+#> [1] 0.0006703128
 ```
 
 A second example, for time.
 
 ``` r
     set.seed(42)
-    system.time(res1 <- logistic_reg(padded_x, padded_y) )
+    system.time(res1 <- logistic_reg(padded_x, padded_y)$coefficients )
 #>    user  system elapsed 
-#>   0.069   0.000   0.069
+#>   0.100   0.001   0.102
  
-    system.time(res2 <- padded_logistic_reg(x,y,padding = testpadding))
+    system.time(res2 <- padded_logistic_reg(x,y,padding = testpadding)$coefficients)
 #>    user  system elapsed 
-#>   0.022   0.000   0.022
+#>   0.035   0.001   0.036
 
     system.time(res3 <- glm.fit(padded_x,padded_y,family = binomial())$coefficients)
 #>    user  system elapsed 
-#>   5.450   0.180   5.639
+#>   5.189   0.171   5.364
 
     max(abs(res1 - res2)) ## identical results
-#> [1] 2.273737e-12
+#> [1] 3.166356e-13
 
     max(abs(res2 - res3))
-#> [1] 0.0006319121
+#> [1] 6.953141e-05
 ```

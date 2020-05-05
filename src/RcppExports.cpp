@@ -6,35 +6,70 @@
 
 using namespace Rcpp;
 
-// logistic_reg_
-Rcpp::NumericVector logistic_reg_(Rcpp::NumericMatrix x, Rcpp::NumericVector y);
-RcppExport SEXP _LRpadding_logistic_reg_(SEXP xSEXP, SEXP ySEXP) {
+// basic_logistic_reg_
+Rcpp::NumericVector basic_logistic_reg_(Rcpp::NumericMatrix x, Rcpp::NumericVector y);
+RcppExport SEXP _LRpadding_basic_logistic_reg_(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type x(xSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type y(ySEXP);
-    rcpp_result_gen = Rcpp::wrap(logistic_reg_(x, y));
+    rcpp_result_gen = Rcpp::wrap(basic_logistic_reg_(x, y));
     return rcpp_result_gen;
 END_RCPP
 }
-// padding_logistic_reg_
-Rcpp::NumericVector padding_logistic_reg_(Rcpp::NumericMatrix x, Rcpp::NumericVector y, int padding);
-RcppExport SEXP _LRpadding_padding_logistic_reg_(SEXP xSEXP, SEXP ySEXP, SEXP paddingSEXP) {
+// logistic_reg_
+Rcpp::List logistic_reg_(Rcpp::NumericMatrix x, Rcpp::NumericVector y, Rcpp::NumericVector start, double eps_f, double eps_g, int maxit);
+RcppExport SEXP _LRpadding_logistic_reg_(SEXP xSEXP, SEXP ySEXP, SEXP startSEXP, SEXP eps_fSEXP, SEXP eps_gSEXP, SEXP maxitSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type start(startSEXP);
+    Rcpp::traits::input_parameter< double >::type eps_f(eps_fSEXP);
+    Rcpp::traits::input_parameter< double >::type eps_g(eps_gSEXP);
+    Rcpp::traits::input_parameter< int >::type maxit(maxitSEXP);
+    rcpp_result_gen = Rcpp::wrap(logistic_reg_(x, y, start, eps_f, eps_g, maxit));
+    return rcpp_result_gen;
+END_RCPP
+}
+// basic_padding_logistic_reg_
+Rcpp::NumericVector basic_padding_logistic_reg_(Rcpp::NumericMatrix x, Rcpp::NumericVector y, int padding);
+RcppExport SEXP _LRpadding_basic_padding_logistic_reg_(SEXP xSEXP, SEXP ySEXP, SEXP paddingSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type x(xSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type y(ySEXP);
     Rcpp::traits::input_parameter< int >::type padding(paddingSEXP);
-    rcpp_result_gen = Rcpp::wrap(padding_logistic_reg_(x, y, padding));
+    rcpp_result_gen = Rcpp::wrap(basic_padding_logistic_reg_(x, y, padding));
+    return rcpp_result_gen;
+END_RCPP
+}
+// padded_logistic_reg_
+Rcpp::List padded_logistic_reg_(Rcpp::NumericMatrix x, Rcpp::NumericVector y, int padding, Rcpp::NumericVector start, double eps_f, double eps_g, int maxit);
+RcppExport SEXP _LRpadding_padded_logistic_reg_(SEXP xSEXP, SEXP ySEXP, SEXP paddingSEXP, SEXP startSEXP, SEXP eps_fSEXP, SEXP eps_gSEXP, SEXP maxitSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< int >::type padding(paddingSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type start(startSEXP);
+    Rcpp::traits::input_parameter< double >::type eps_f(eps_fSEXP);
+    Rcpp::traits::input_parameter< double >::type eps_g(eps_gSEXP);
+    Rcpp::traits::input_parameter< int >::type maxit(maxitSEXP);
+    rcpp_result_gen = Rcpp::wrap(padded_logistic_reg_(x, y, padding, start, eps_f, eps_g, maxit));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_LRpadding_logistic_reg_", (DL_FUNC) &_LRpadding_logistic_reg_, 2},
-    {"_LRpadding_padding_logistic_reg_", (DL_FUNC) &_LRpadding_padding_logistic_reg_, 3},
+    {"_LRpadding_basic_logistic_reg_", (DL_FUNC) &_LRpadding_basic_logistic_reg_, 2},
+    {"_LRpadding_logistic_reg_", (DL_FUNC) &_LRpadding_logistic_reg_, 6},
+    {"_LRpadding_basic_padding_logistic_reg_", (DL_FUNC) &_LRpadding_basic_padding_logistic_reg_, 3},
+    {"_LRpadding_padded_logistic_reg_", (DL_FUNC) &_LRpadding_padded_logistic_reg_, 7},
     {NULL, NULL, 0}
 };
 
