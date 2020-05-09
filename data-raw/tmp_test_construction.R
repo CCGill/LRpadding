@@ -12,8 +12,8 @@
 # note that we already test equivalence of padded and basic implementations.
 rm(list = ls())
 seed = 12345
-numcomps = 50
-numresp = 20000
+numcomps = 3
+numresp = 200
 numinds = 100
 
 # setup inputs
@@ -72,9 +72,9 @@ TEST1_data = list(
 
 set.seed(12345)
 
-numcomps = 5
-numresp = 20000
-numinds = 100
+numcomps = 10
+numresp = 1000
+numinds = 50
 set.seed(seed)
 Responsemat<-matrix(runif(numresp*numcomps),numresp,numcomps) # this is our S matrix
 
