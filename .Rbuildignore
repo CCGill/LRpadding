@@ -3,3 +3,4 @@
 ^LICENSE\.md$
 ^Makefile$
 ^README\.Rmd$
+^data-raw$
