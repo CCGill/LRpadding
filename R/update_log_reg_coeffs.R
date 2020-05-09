@@ -13,40 +13,59 @@ simpler_log_likelihood <- function(vec,predictors){
 }
 
 
-
+#' @export
 baseline_update_log_reg_coeffs<-function(model,
-                                responsemat,
-                                oldcoeffmat,
-                                padding_zeros = 0,
-                                cols_to_update){
-### A function to fit a logistic regression model and
-### improve on the given coefficients.
+                                         responsemat,
+                                         coeffmat,
+                                         predictors,
+                                         fitted_values,
+                                         padding_zeros = 0L,
+                                         cols_to_update){
+  ### A function to fit a logistic regression model and
+  ### improve on the given coefficients.
   
   ## iterate through the columns of responsemat, fit a logistic regression, and 
   ## if we improve the log-likelihood then record in the coeffmat, return coeffmat
   
-  coeffmat = oldcoeffmat ## shallow-copy the coefficient matrix
   
-  old_XB = model*oldcoeffmat
   
-  loglikelihoods = colSums(responsemat*old_XB)  - colSums(qgam::log1pexp(old_XB))
+  old_XB = model %*% coeffmat
   
-  for(i in cols_to_update){
-    
-    tmp_coeffs <- basic_padded_logistic_reg(model,responsemat[,i],padding = padding_zeros)
-    newll<-simpler_log_likelihood(responsemat[,i],model%*%tmp_coeffs)
-    if(loglikelihoods[i] < newll){
-      print('update accepted')
-      coeffmat[,i] = tmp_coeffs
-      loglikelihoods[i] = newll
-    }else{  
-      print('update rejected')
+  old_loglikelihoods = colSums(responsemat*old_XB)  - colSums(qgam::log1pexp(old_XB)) 
+  if(padding_zeros>0){ old_loglikelihoods = old_loglikelihoods - padding_zeros*qgam::log1pexp(coeffmat[1,])}
+  ## this qgam saves a _lot_ of time.  as does calculating all the loglikelihoods together.
+  loglikelihoods = rep(0,length(old_loglikelihoods))
+  print(cols_to_update)
+  for(i in 1:ncol(coeffmat)){
+    print(cols_to_update[i])
+    if(cols_to_update[i]>0){
+      print(paste0('Calling padded_logistic_reg on column ',i))
+      
+      tmpmodel <- padded_logistic_reg(model,responsemat[,i],padding = padding_zeros)
+      
+      #newll<-simpler_log_likelihood(responsemat[,i],model%*%tmp_coeffs)
+      
+      if(old_loglikelihoods[i] < tmpmodel$loglikelihood){
+        print('update accepted')
+        coeffmat[,i] = tmpmodel$coefficients
+        loglikelihoods[i] = tmpmodel$loglikelihood
+        fitted_values[,i] = tmpmodel$fitted.values
+        predictors[,i] = tmpmodel$linear.predictors
+        
+      }else{  
+        print('update rejected')
+      }
     }
   }
   print('logistic regression update finished')
   
   return(list(coeffs = coeffmat,
+              old_loglikelihoods = old_loglikelihoods,
               loglikelihoods = loglikelihoods,
-              predictors = model%*%coeffmat))
+              predictors = predictors,
+              fitted_values = fitted_values))
   
 }
+
+
+

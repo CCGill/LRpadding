@@ -6,6 +6,22 @@
 
 using namespace Rcpp;
 
+// update_logreg_coeffs
+void update_logreg_coeffs(Eigen::Map<Eigen::MatrixXd> model, Eigen::Map<Eigen::MatrixXd> responsemat, Eigen::Map<Eigen::MatrixXd> coeffmat, Eigen::Map<Eigen::MatrixXd> Xb, Eigen::Map<Eigen::MatrixXd> fitted, Eigen::Map<Eigen::VectorXd> cols_to_update, int padding_zeros);
+RcppExport SEXP _LRpadding_update_logreg_coeffs(SEXP modelSEXP, SEXP responsematSEXP, SEXP coeffmatSEXP, SEXP XbSEXP, SEXP fittedSEXP, SEXP cols_to_updateSEXP, SEXP padding_zerosSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd> >::type model(modelSEXP);
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd> >::type responsemat(responsematSEXP);
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd> >::type coeffmat(coeffmatSEXP);
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd> >::type Xb(XbSEXP);
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd> >::type fitted(fittedSEXP);
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::VectorXd> >::type cols_to_update(cols_to_updateSEXP);
+    Rcpp::traits::input_parameter< int >::type padding_zeros(padding_zerosSEXP);
+    update_logreg_coeffs(model, responsemat, coeffmat, Xb, fitted, cols_to_update, padding_zeros);
+    return R_NilValue;
+END_RCPP
+}
 // basic_logistic_reg_
 Rcpp::NumericVector basic_logistic_reg_(Rcpp::NumericMatrix x, Rcpp::NumericVector y);
 RcppExport SEXP _LRpadding_basic_logistic_reg_(SEXP xSEXP, SEXP ySEXP) {
@@ -66,6 +82,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_LRpadding_update_logreg_coeffs", (DL_FUNC) &_LRpadding_update_logreg_coeffs, 7},
     {"_LRpadding_basic_logistic_reg_", (DL_FUNC) &_LRpadding_basic_logistic_reg_, 2},
     {"_LRpadding_logistic_reg_", (DL_FUNC) &_LRpadding_logistic_reg_, 6},
     {"_LRpadding_basic_padding_logistic_reg_", (DL_FUNC) &_LRpadding_basic_padding_logistic_reg_, 3},
