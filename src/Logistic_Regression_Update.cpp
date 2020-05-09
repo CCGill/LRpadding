@@ -73,6 +73,26 @@ void update_logreg_coeffs_(RefMat model,
 
 //  Next an Rcpp wrapper to make this available to R for testing.
 
+
+//' LR Update Function
+//'
+//' Runs Logistic Regression on each response with the model and updates the
+//' coefficients, predictors, and fitted values when the log-likelihood has
+//' been improved.  Updates values in place.
+//'
+//' @param model  - model matrix.
+//' @param responsemat matrix of response vectors in columns.
+//' @param coeffmat initial coefficient matrix.
+//' @param Xb matrix of linear predictors, one column for each response.
+//' @param fitted matrix of fitted probabilities.
+//' @param cols_to_update vector of zeros and ones (doubles) indicating which
+//'  columns to update.
+//' @param integer number of padding zeros to add to the response and predictors
+//' to update.
+//'
+//' @return list of coefficient matrix, predictor matrix, fitted_values matrix,
+//' vector of old loglikelihoods (from inputs) and vector on new log likelihoods
+//' based on the returned coefficients.
 //' @export
 //[[Rcpp::export]]   
 void update_logreg_coeffs(Eigen::Map<Eigen::MatrixXd> model,

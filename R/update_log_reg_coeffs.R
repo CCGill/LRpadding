@@ -13,6 +13,25 @@ simpler_log_likelihood <- function(vec,predictors){
 }
 
 
+
+#' Baseline Update Function
+#'
+#' Runs Logistic Regression on each response with the model and updates the
+#' coefficients, predictors, and fitted values when the log-likelihood has
+#' been improved.
+#'
+#' @param model  - model matrix.
+#' @param responsemat matrix of response vectors in columns.
+#' @param coeffmat initial coefficient matrix.
+#' @param predictors matrix of linear predictors, one column for each response.
+#' @param fitted_values matrix of fitted probabilities.
+#' @param integer number of padding zeros to add to the response and predictors
+#' @param cols_to_update vector of zeros and ones indicating which columns 
+#' to update.
+#' 
+#' @return list of coefficient matrix, predictor matrix, fitted_values matrix, 
+#' vector of old loglikelihoods (from inputs) and vector on new log likelihoods
+#' based on the returned coefficients.
 #' @export
 baseline_update_log_reg_coeffs<-function(model,
                                          responsemat,
