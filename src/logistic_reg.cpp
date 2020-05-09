@@ -1,8 +1,8 @@
 #include "LR.h"
 #include "basicLR.h"
 
-
-
+/* functions implementing standard Logistic Regression */
+/////////////////////////////////////////////////////////
 
 // [[Rcpp::export]]
 Rcpp::NumericVector basic_logistic_reg_(Rcpp::NumericMatrix x, Rcpp::NumericVector y)

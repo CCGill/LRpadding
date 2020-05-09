@@ -1,5 +1,9 @@
 #include "basicLR.h"
 
+/* Methods for the basicLogisticReg and basicPaddedLogisticReg classes
+ * that code the classes to pass to the L-BFGS optimizer.  
+ */
+
 basicLogisticReg::basicLogisticReg(const Eigen::Ref<Eigen::MatrixXd> x_, const Eigen::Ref<Eigen::VectorXd> y_) : X(x_), Y(y_) {}
 
 double basicLogisticReg::f_grad(Constvec& beta, Refvec grad)

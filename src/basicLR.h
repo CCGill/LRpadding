@@ -2,6 +2,11 @@
 #define BASICLOG_REG
 
 
+/* These classes are for passing to the L-BFGS optimizer and facilitate a Logistic Regression 
+ * which returns only the coefficients.  basicLogisticReg is essentially the example fastLR example from the 
+ * RcppNumerical documentation, with a couple of changes.
+ */
+
 #include <RcppNumerical.h>
 #include <Rmath.h>
 #include <RcppEigen.h>
