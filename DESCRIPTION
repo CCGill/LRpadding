@@ -7,6 +7,7 @@ Authors@R:
     person("Christopher", "Gill", email = "chrgill@gmail.com", role = c("aut", "cre"))
 Description: Part of a larger project developed here for testing purposes, implements here a padded logistic regression.
 License: GPL-3
+Depends: R (>= 3.6.0)
 Imports: 
     Rcpp (>= 1.0.4),
     RcppNumerical,
