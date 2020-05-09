@@ -25,10 +25,11 @@ baseline_update_log_reg_coeffs(
 
 \item{fitted_values}{matrix of fitted probabilities.}
 
+\item{padding_zeros}{integer number of padding zeros to add to the response
+and predictors, defaults to zero.}
+
 \item{cols_to_update}{vector of zeros and ones indicating which columns 
 to update.}
-
-\item{integer}{number of padding zeros to add to the response and predictors}
 }
 \value{
 list of coefficient matrix, predictor matrix, fitted_values matrix, 

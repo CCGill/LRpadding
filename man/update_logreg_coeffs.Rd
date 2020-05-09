@@ -28,8 +28,8 @@ update_logreg_coeffs(
 \item{cols_to_update}{vector of zeros and ones (doubles) indicating which
 columns to update.}
 
-\item{integer}{number of padding zeros to add to the response and predictors
-to update.}
+\item{padding_zeros}{integer number of padding zeros to add to the response
+and predictors to update.}
 }
 \value{
 list of coefficient matrix, predictor matrix, fitted_values matrix,

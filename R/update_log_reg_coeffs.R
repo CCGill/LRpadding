@@ -25,7 +25,8 @@ simpler_log_likelihood <- function(vec,predictors){
 #' @param coeffmat initial coefficient matrix.
 #' @param predictors matrix of linear predictors, one column for each response.
 #' @param fitted_values matrix of fitted probabilities.
-#' @param integer number of padding zeros to add to the response and predictors
+#' @param padding_zeros integer number of padding zeros to add to the response
+#'  and predictors, defaults to zero.
 #' @param cols_to_update vector of zeros and ones indicating which columns 
 #' to update.
 #' 

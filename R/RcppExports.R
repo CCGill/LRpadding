@@ -14,8 +14,8 @@
 #' @param fitted matrix of fitted probabilities.
 #' @param cols_to_update vector of zeros and ones (doubles) indicating which
 #'  columns to update.
-#' @param integer number of padding zeros to add to the response and predictors
-#' to update.
+#' @param padding_zeros integer number of padding zeros to add to the response
+#'  and predictors to update.
 #'
 #' @return list of coefficient matrix, predictor matrix, fitted_values matrix,
 #' vector of old loglikelihoods (from inputs) and vector on new log likelihoods
