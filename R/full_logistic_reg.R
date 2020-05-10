@@ -1,7 +1,7 @@
 
 #' Logistic Regression
 #' 
-#' logistic_reg function that performs logistic regression, implemented here for baseline unit testing.
+#' logistic_reg function that performs logistic regression, implemented here for baseline unit testing.  This is almost identical to RcppNumerical::fastLR.
 #' 
 #' @param x the design matrix, with predictors as columns.
 #' @param y the response vector.

@@ -41,5 +41,5 @@ a list with the following components:
 \item{converged}{Whether the optimization algorithm has converged}
 }
 \description{
-logistic_reg function that performs logistic regression, implemented here for baseline unit testing.
+logistic_reg function that performs logistic regression, implemented here for baseline unit testing.  This is almost identical to RcppNumerical::fastLR.
 }
