@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # LRpadding
 
 <!-- badges: start -->
+[![Travis build status](https://travis-ci.com/CCGill/LRpadding.svg?branch=master)](https://travis-ci.com/CCGill/LRpadding)
 <!-- badges: end -->
 
 LRpadding is a very short term project to implement a simple padding functionality for logistic regression,

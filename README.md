@@ -4,7 +4,8 @@ LRpadding
 =========
 
 <!-- badges: start -->
-<!-- badges: end -->
+[![Travis build status](https://travis-ci.com/CCGill/LRpadding.svg?branch=master)](https://travis-ci.com/CCGill/LRpadding) <!-- badges: end -->
+
 LRpadding is a very short term project to implement a simple padding functionality for logistic regression, allowing the concatenation of arbitrarily many zeros on both the predictors and the response. This is part of a much larger project, this code is entirely for testing and development.
 
 Without an intercept, padding in this way would result in no effect (simply multiplying the likelihood by a constant), so we assume we include an intercept as the first column of the model matrix.
@@ -70,15 +71,15 @@ A second example, for time.
     set.seed(42)
     system.time(res1 <- logistic_reg(padded_x, padded_y)$coefficients )
 #>    user  system elapsed 
-#>   0.100   0.001   0.102
+#>   0.137   0.001   0.138
  
     system.time(res2 <- padded_logistic_reg(x,y,padding = testpadding)$coefficients)
 #>    user  system elapsed 
-#>   0.035   0.001   0.036
+#>   0.042   0.001   0.042
 
     system.time(res3 <- glm.fit(padded_x,padded_y,family = binomial())$coefficients)
 #>    user  system elapsed 
-#>   5.189   0.171   5.364
+#>   6.170   0.307   6.550
 
     max(abs(res1 - res2)) ## identical results
 #> [1] 3.166356e-13
